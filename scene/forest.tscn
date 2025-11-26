@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=4 uid="uid://xrvln1vkk54l"]
+[gd_scene load_steps=14 format=4 uid="uid://xrvln1vkk54l"]
 
 [ext_resource type="PackedScene" uid="uid://b3rk74tpc32bf" path="res://entities/player.tscn" id="1_e2knd"]
 [ext_resource type="TileSet" uid="uid://baokt6ut2kihv" path="res://tiles/collision.tres" id="2_2xpkg"]
 [ext_resource type="Texture2D" uid="uid://cqq4qjl1qk3aa" path="res://sprites/tilesets/2 - Autumn Forest/Background parts/6 - Distant_trees.png" id="3_gbfvw"]
+[ext_resource type="TileSet" uid="uid://bdcjdsa5l2d0x" path="res://tiles/decoration.tres" id="3_gwku7"]
 [ext_resource type="Texture2D" uid="uid://b4kjf531wwvqu" path="res://sprites/tilesets/2 - Autumn Forest/Background parts/5 - Tree_row_BG_2.png" id="4_v5bin"]
 [ext_resource type="Texture2D" uid="uid://cpkkd7x0yjqdd" path="res://sprites/tilesets/2 - Autumn Forest/Background parts/4 - Tree_row_BG_1.png" id="5_e3l50"]
 [ext_resource type="Texture2D" uid="uid://boogu0d27guwb" path="res://sprites/tilesets/2 - Autumn Forest/Background parts/3 - Bottom_leaf_piles.png" id="6_qxlj4"]
@@ -55,18 +56,22 @@ texture = ExtResource("10_jxvlp")
 sources/0 = SubResource("TileSetAtlasSource_gwku7")
 
 [node name="forest" type="Node2D"]
+metadata/_edit_vertical_guides_ = [764.0]
 
-[node name="player" parent="." instance=ExtResource("1_e2knd")]
-position = Vector2(130, 149)
+[node name="tilemaps" type="Node" parent="."]
 
-[node name="TileMapLayer-terrain" type="TileMapLayer" parent="."]
+[node name="TileMapLayer-terrain" type="TileMapLayer" parent="tilemaps"]
 tile_map_data = PackedByteArray("AAAAAAwAAQACAAMAAAABAAwAAQACAAMAAAACAAwAAQACAAMAAAADAAwAAQACAAMAAAAEAAwAAQACAAMAAAAFAAwAAQACAAMAAAAGAAwAAQACAAMAAAAHAAwAAQACAAMAAAAIAAwAAQACAAMAAAAJAAwAAQACAAMAAAAKAAwAAQACAAMAAAALAAwAAQACAAMAAAAMAAwAAQACAAMAAAANAAwAAQACAAMAAAAOAAwAAQACAAMAAAAPAAwAAQACAAMAAAAQAAwAAQACAAMAAAARAAwAAQACAAMAAAASAAwAAQACAAMAAAATAAwAAQACAAMAAAAUAAwAAQADAAMAAAAVAAwAAQAEAAMAAAAWAAwAAQAEAAMAAAAXAAwAAQAEAAMAAAAYAAwAAQAEAAMAAAAZAAwAAQAEAAMAAAAaAAwAAQAEAAMAAAAbAAwAAQAEAAMAAAAcAAwAAQAEAAMAAAAdAAwAAQAEAAMAAAAeAAwAAQAEAAMAAAAfAAwAAQAEAAMAAAAgAAwAAQAEAAMAAAAhAAwAAQAEAAMAAAAiAAwAAQAFAAMAAAAjAAwAAQACAAMAAAAMAAkAAQAJAAMAAAANAAkAAQAKAAMAAAAOAAkAAQANAAMAAAAOAAYAAQAJAAMAAAAPAAYAAQAKAAMAAAAQAAYAAQANAAMAAAAQAAMAAQAJAAMAAAARAAMAAQAKAAMAAAASAAMAAQANAAMAAAAkAAwAAQACAAMAAAAlAAwAAQACAAMAAAAmAAwAAQACAAMAAAAnAAwAAQACAAMAAAAoAAwAAQACAAMAAAApAAwAAQACAAMAAAAqAAwAAQACAAMAAAArAAwAAQACAAMAAAAsAAwAAQACAAMAAAAtAAwAAQACAAMAAAAuAAwAAQACAAMAAAAvAAwAAQACAAMAAAAwAAwAAQACAAMAAAAxAAwAAQACAAMAAAAyAAwAAQACAAMAAAAzAAwAAQACAAMAAAA0AAwAAQACAAMAAAA1AAwAAQACAAMAAAA2AAwAAQACAAMAAAA3AAwAAQACAAMAAAAVAAoAAQACAAMAAAAWAAoAAQACAAMAAAAXAAoAAQACAAMAAAAZAAgAAQACAAMAAAAaAAgAAQACAAMAAAAbAAgAAQACAAMAAAAdAAYAAQACAAMAAAAeAAYAAQACAAMAAAAfAAYAAQACAAMAAAAgAAYAAQACAAMAAAAhAAYAAQACAAMAAAAYAAgAAQABAAMAAAAcAAYAAQABAAMAAAAUAAoAAQABAAMAAAAUAAsAAQADAAUAAAAYAAoAAQADAAMAAAAcAAgAAQADAAMAAAAiAAYAAQAHAAMAAAAiAAcAAQAFAAUAAAAiAAgAAQAFAAUAAAAiAAsAAQAFAAUAAAAYAAkAAQADAAUAAAAcAAcAAQADAAUAAAAdAAkAAQAFAAUAAAAdAAgAAQAFAAQAAAAdAAcAAQAEAAQAAAAeAAcAAQAEAAQAAAAeAAgAAQAEAAYAAAAdAAoAAQAFAAUAAAAcAAoAAQAEAAQAAAAcAAkAAQAEAAQAAAAbAAkAAQAEAAQAAAAaAAkAAQAEAAQAAAAZAAkAAQAEAAQAAAAZAAoAAQAEAAQAAAAZAAsAAQAEAAQAAAAYAAsAAQAEAAQAAAAXAAsAAQAEAAQAAAAWAAsAAQAEAAQAAAAVAAsAAQAEAAQAAAAaAAsAAQAEAAQAAAAaAAoAAQAEAAQAAAAbAAoAAQAEAAQAAAAbAAsAAQAEAAQAAAAcAAsAAQAEAAQAAAAdAAsAAQAFAAMAAAAeAAsAAQAGAAMAAAAfAAsAAQAGAAMAAAAfAAgAAQAEAAYAAAAfAAcAAQAEAAQAAAAgAAcAAQAEAAQAAAAgAAgAAQAEAAYAAAAgAAsAAQAGAAMAAAAhAAsAAQADAAMAAAAhAAgAAQADAAQAAAAhAAcAAQAEAAQAAAA4AAwAAQAHAAMAAAA=")
 tile_set = ExtResource("2_2xpkg")
 
-[node name="TileMapLayer-faketerrain" type="TileMapLayer" parent="."]
+[node name="TileMapLayer-faketerrain" type="TileMapLayer" parent="tilemaps"]
 z_index = 2
 tile_map_data = PackedByteArray("AAAiAAoAAAAFAAUAAAAiAAkAAAAFAAUAAAAhAAkAAAADAAUAAAAhAAoAAAADAAUAAAA=")
 tile_set = SubResource("TileSet_64es3")
+
+[node name="TileMapLayer-decoration" type="TileMapLayer" parent="tilemaps"]
+tile_map_data = PackedByteArray("AAAtAAsAAAADAAUAAAA=")
+tile_set = ExtResource("3_gwku7")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -139,3 +144,7 @@ region_rect = Rect2(0, 0, 576, 208)
 [node name="Camera2D" parent="." instance=ExtResource("9_jo4av")]
 position = Vector2(10, 113)
 limit_top = 0
+limit_right = 764
+
+[node name="player" parent="." instance=ExtResource("1_e2knd")]
+position = Vector2(130, 149)
