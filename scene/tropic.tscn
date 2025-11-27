@@ -99,7 +99,7 @@ position = Vector2(31, 112)
 limit_right = 825
 
 [node name="player" parent="." instance=ExtResource("1_bmxgx")]
-position = Vector2(31, 168)
+position = Vector2(7, 168)
 
 [node name="Area2D-endLevel" parent="." instance=ExtResource("10_d18o5")]
 position = Vector2(835, 87.00001)
