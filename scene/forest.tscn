@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://xrvln1vkk54l"]
+[gd_scene load_steps=15 format=4 uid="uid://xrvln1vkk54l"]
 
 [ext_resource type="PackedScene" uid="uid://b3rk74tpc32bf" path="res://entities/player.tscn" id="1_e2knd"]
 [ext_resource type="TileSet" uid="uid://baokt6ut2kihv" path="res://tiles/collision.tres" id="2_2xpkg"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://bdiukcl3ksjj3" path="res://sprites/tilesets/2 - Autumn Forest/Background parts/1 - Leaf_top.png" id="8_jxvlp"]
 [ext_resource type="PackedScene" uid="uid://dixoxuno4doel" path="res://entities/camera.tscn" id="9_jo4av"]
 [ext_resource type="Texture2D" uid="uid://bss0dish2cxm3" path="res://sprites/tilesets/2 - Autumn Forest/Terrain (16 x 16).png" id="10_jxvlp"]
+[ext_resource type="PackedScene" uid="uid://dlo804hok3vy6" path="res://entities/end_level.tscn" id="12_64es3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gwku7"]
 texture = ExtResource("10_jxvlp")
@@ -147,4 +148,9 @@ limit_top = 0
 limit_right = 764
 
 [node name="player" parent="." instance=ExtResource("1_e2knd")]
-position = Vector2(130, 149)
+position = Vector2(8, 184)
+
+[node name="Area2D-endLevel" parent="." instance=ExtResource("12_64es3")]
+position = Vector2(774, 99)
+scale = Vector2(1, 10.319998)
+next_level = "tropic"

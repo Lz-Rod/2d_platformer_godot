@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://difcorogbfu3o"]
+[gd_scene load_steps=12 format=4 uid="uid://difcorogbfu3o"]
 
 [ext_resource type="PackedScene" uid="uid://b3rk74tpc32bf" path="res://entities/player.tscn" id="1_bmxgx"]
 [ext_resource type="TileSet" uid="uid://baokt6ut2kihv" path="res://tiles/collision.tres" id="2_ry6l7"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://c0a6sdldk6sjs" path="res://sprites/tilesets/3 - Tropics/Background parts/2 - Waters_version_2.png" id="7_34ia6"]
 [ext_resource type="Texture2D" uid="uid://bfgvrc0dtm4o" path="res://sprites/tilesets/3 - Tropics/Background parts/1 - Waters_version_1.png" id="8_d18o5"]
 [ext_resource type="PackedScene" uid="uid://dixoxuno4doel" path="res://entities/camera.tscn" id="9_34ia6"]
+[ext_resource type="PackedScene" uid="uid://dlo804hok3vy6" path="res://entities/end_level.tscn" id="10_d18o5"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_7xb8y"]
 animations = [{
@@ -95,7 +96,12 @@ centered = false
 
 [node name="Camera2D" parent="." instance=ExtResource("9_34ia6")]
 position = Vector2(31, 112)
-limit_right = 852
+limit_right = 825
 
 [node name="player" parent="." instance=ExtResource("1_bmxgx")]
-position = Vector2(37, 167)
+position = Vector2(31, 168)
+
+[node name="Area2D-endLevel" parent="." instance=ExtResource("10_d18o5")]
+position = Vector2(835, 87.00001)
+scale = Vector2(1, 9.480007)
+next_level = "forest"

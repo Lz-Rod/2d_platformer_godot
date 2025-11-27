@@ -5,7 +5,7 @@ var target: Node2D
 func _ready() -> void:
 	get_target()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	position = target.position #aqui a posição pega a posição do target e fará a camera seguir o player
 
 func get_target():
