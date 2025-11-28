@@ -3,7 +3,8 @@ extends CharacterBody2D
 enum PlayerState {
 	idle,
 	walk,
-	jump
+	jump,
+	crouch
 }
 
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
@@ -30,6 +31,8 @@ func _physics_process(delta: float) -> void:
 			walk_state()
 		PlayerState.jump:
 			jump_state()
+		PlayerState.crouch:
+			crouch_state()
 			
 	move_and_slide()
 
@@ -46,6 +49,10 @@ func go_to_jump_state():
 	status = PlayerState.jump
 	anim.play("jump")
 	velocity.y = JUMP_VELOCITY
+	
+func go_to_crouch_state():
+	status = PlayerState.crouch
+	anim.play("crouch")
 
 #essas funções determinam o que acontece em cada estado
 func idle_state():
@@ -56,6 +63,10 @@ func idle_state():
 		
 	if Input.is_action_just_pressed("jump"):
 		go_to_jump_state()
+		return
+		
+	if Input.is_action_pressed("crouch"):
+		go_to_crouch_state()
 		return
 	
 func walk_state():
@@ -78,6 +89,11 @@ func jump_state():
 			go_to_walk_state()
 		return
 
+func crouch_state():
+	if Input.is_action_just_released("crouch"):
+		go_to_idle_state()
+	return
+	
 #atualiza a velocidade do player e faz a animação flipar
 func move():
 	var direction := Input.get_axis("left", "right")
