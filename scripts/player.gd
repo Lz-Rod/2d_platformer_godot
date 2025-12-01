@@ -8,10 +8,12 @@ enum PlayerState {
 }
 
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
+@onready var coll: CollisionShape2D = $CollisionShape2D
 
 const SPEED = 80.0
 const JUMP_VELOCITY = -300.0
 
+var direction = 0
 var status: PlayerState
 
 #essa função inicia o jogo em idle
@@ -53,6 +55,12 @@ func go_to_jump_state():
 func go_to_crouch_state():
 	status = PlayerState.crouch
 	anim.play("crouch")
+	coll.shape.size = Vector2(10,10)
+	coll.position.y = 3
+	
+func exit_from_crouch_state():
+	coll.shape.size = Vector2(10,14)
+	coll.position.y = 1
 
 #essas funções determinam o que acontece em cada estado
 func idle_state():
@@ -90,18 +98,24 @@ func jump_state():
 		return
 
 func crouch_state():
+	update_direction()
 	if Input.is_action_just_released("crouch"):
+		exit_from_crouch_state()
 		go_to_idle_state()
 	return
 	
 #atualiza a velocidade do player e faz a animação flipar
 func move():
-	var direction := Input.get_axis("left", "right")
+	update_direction()
+			
 	if direction:
 		velocity.x = direction * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
-
+		
+func update_direction():
+	direction = Input.get_axis("left", "right")
+	
 	if direction < 0:
 		anim.flip_h = true		
 	elif direction > 0:
