@@ -4,13 +4,18 @@ enum PlayerState {
 	idle,
 	walk,
 	jump,
-	crouch
+	fall,
+	crouch,
+	slide
 }
 
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var coll: CollisionShape2D = $CollisionShape2D
 
-const SPEED = 80.0
+@export var max_speed = 180.0
+@export var acceleration = 400
+@export var deceleration = 400
+@export var slide_deceleration = 100
 const JUMP_VELOCITY = -300.0
 
 var jump_count = 0
@@ -31,13 +36,17 @@ func _physics_process(delta: float) -> void:
 	
 	match status:
 		PlayerState.idle:
-			idle_state()
+			idle_state(delta)
 		PlayerState.walk:
-			walk_state()
+			walk_state(delta)
 		PlayerState.jump:
-			jump_state()
+			jump_state(delta)
+		PlayerState.fall:
+			fall_state(delta)
 		PlayerState.crouch:
-			crouch_state()
+			crouch_state(delta)
+		PlayerState.slide:
+			slide_state(delta)
 			
 	move_and_slide()
 
@@ -56,19 +65,31 @@ func go_to_jump_state():
 	velocity.y = JUMP_VELOCITY
 	jump_count += 1
 	
+func go_to_fall_state():
+	status = PlayerState.fall
+	anim.play("fall"
+	)
+	
 func go_to_crouch_state():
 	status = PlayerState.crouch
 	anim.play("crouch")
-	coll.shape.size = Vector2(10,10)
-	coll.position.y = 3
+	set_collide_size(10,10,3)
+
 	
 func exit_from_crouch_state():
-	coll.shape.size = Vector2(10,14)
-	coll.position.y = 1
+	set_collide_size(10,14,1)
+	
+func go_to_slide_state():
+	status = PlayerState.slide
+	anim.play("slide")
+	set_collide_size(10,10,3)
+	
+func exit_from_slide_state():
+	set_collide_size(10,14,1)
 
 #essas funções determinam o que acontece em cada estado
-func idle_state():
-	move()
+func idle_state(delta):
+	move(delta)
 	if velocity.x != 0:
 		go_to_walk_state()
 		return
@@ -81,8 +102,8 @@ func idle_state():
 		go_to_crouch_state()
 		return
 	
-func walk_state():
-	move()
+func walk_state(delta):
+	move(delta)
 	if velocity.x == 0:
 		go_to_idle_state()
 		return
@@ -90,12 +111,33 @@ func walk_state():
 	if Input.is_action_just_pressed("jump"):
 		go_to_jump_state()
 		return
+	# ativa a animação de fall quando ele and para fora de uma plataforma e desconta um pulo para que ele nao possa dar um pulo triploo
+	if !is_on_floor():
+		jump_count += 1
+		go_to_fall_state()
+		return
+		
+	if Input.is_action_just_pressed("crouch"):
+		go_to_slide_state()
+		return
 	
-func jump_state():
-	move()
+func jump_state(delta):
+	move(delta)
 	
-	if Input.is_action_just_pressed("jump") && jump_count < max_jump_count:
+	if Input.is_action_just_pressed("jump") && can_jump():
 		go_to_jump_state()		
+		return
+		
+	if velocity.y > 0:
+		go_to_fall_state()
+		return
+				
+func fall_state(delta):
+	move(delta)
+	
+	if Input.is_action_just_pressed("jump") && can_jump():
+		go_to_jump_state()
+		return
 	
 	if is_on_floor():
 		jump_count = 0
@@ -105,21 +147,34 @@ func jump_state():
 			go_to_walk_state()
 		return
 
-func crouch_state():
+func crouch_state(_delta):
 	update_direction()
 	if Input.is_action_just_released("crouch"):
 		exit_from_crouch_state()
 		go_to_idle_state()
 	return
 	
+func slide_state(delta):
+	velocity.x = move_toward(velocity.x, 0, slide_deceleration * delta)
+	
+	if Input.is_action_just_released("crouch"):
+		exit_from_slide_state()
+		go_to_walk_state()
+		return
+		
+	if velocity.x == 0:
+		exit_from_slide_state()
+		go_to_crouch_state()
+		return
 #atualiza a velocidade do player e faz a animação flipar
-func move():
+func move(delta):
 	update_direction()
 			
 	if direction:
-		velocity.x = direction * SPEED
+		velocity.x = move_toward(velocity.x, direction * max_speed, acceleration * delta)
+		
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
+		velocity.x = move_toward(velocity.x, 0, deceleration * delta)
 		
 func update_direction():
 	direction = Input.get_axis("left", "right")
@@ -128,3 +183,11 @@ func update_direction():
 		anim.flip_h = true		
 	elif direction > 0:
 		anim.flip_h = false
+
+#função que retorna verdadeiro se jump_count for menor que max_jump_count
+func can_jump() -> bool:
+	return jump_count < max_jump_count
+
+func set_collide_size(x, y, pos):
+	coll.shape.size = Vector2(x,y)
+	coll.position.y = pos
