@@ -187,10 +187,16 @@ position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_u3f3p")
 
 [node name="Area2D-hitbox" type="Area2D" parent="." unique_id=1593469577]
+collision_layer = 2
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D-hitbox" unique_id=425493509]
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_6nm46")
 debug_color = Color(0.9055485, 0.26584044, 0.39079258, 0.41960785)
 
+[node name="Timer-reload" type="Timer" parent="." unique_id=2076244437]
+one_shot = true
+
 [connection signal="area_entered" from="Area2D-hitbox" to="." method="_on_area_2_dhitbox_area_entered"]
+[connection signal="timeout" from="Timer-reload" to="." method="_on_timerreload_timeout"]
