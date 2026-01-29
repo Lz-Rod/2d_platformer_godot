@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://difcorogbfu3o"]
+[gd_scene format=4 uid="uid://difcorogbfu3o"]
 
 [ext_resource type="PackedScene" uid="uid://b3rk74tpc32bf" path="res://entities/player.tscn" id="1_bmxgx"]
 [ext_resource type="TileSet" uid="uid://baokt6ut2kihv" path="res://tiles/collision.tres" id="2_ry6l7"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://bfgvrc0dtm4o" path="res://sprites/tilesets/3 - Tropics/Background parts/1 - Waters_version_1.png" id="8_d18o5"]
 [ext_resource type="PackedScene" uid="uid://dixoxuno4doel" path="res://entities/camera.tscn" id="9_34ia6"]
 [ext_resource type="PackedScene" uid="uid://dlo804hok3vy6" path="res://entities/end_level.tscn" id="10_d18o5"]
+[ext_resource type="PackedScene" uid="uid://dbmu3ctwrftes" path="res://entities/enemies/skeleton.tscn" id="11_t8vtq"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_7xb8y"]
 animations = [{
@@ -25,59 +26,59 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Tropic" type="Node2D"]
+[node name="Tropic" type="Node2D" unique_id=1920834039]
 metadata/_edit_vertical_guides_ = [825.0]
 
-[node name="tilemaps" type="Node" parent="."]
+[node name="tilemaps" type="Node" parent="." unique_id=122789835]
 
-[node name="TileMapLayer-terrain" type="TileMapLayer" parent="tilemaps"]
+[node name="TileMapLayer-terrain" type="TileMapLayer" parent="tilemaps" unique_id=1201137714]
 tile_map_data = PackedByteArray("AAAAAAsAAgACAAMAAAABAAsAAgACAAMAAAACAAsAAgACAAMAAAADAAsAAgACAAMAAAAEAAsAAgACAAMAAAAFAAsAAgACAAMAAAAGAAsAAgACAAMAAAAHAAsAAgACAAMAAAAIAAsAAgAHAAMAAAALAAoAAgAPAAMAAAAOAAsAAgABAAMAAAAPAAsAAgACAAMAAAAQAAsAAgACAAMAAAARAAsAAgACAAMAAAASAAsAAgACAAMAAAATAAsAAgACAAMAAAAUAAsAAgACAAMAAAAVAAsAAgACAAMAAAAWAAsAAgACAAMAAAAXAAsAAgAGAAMAAAAYAAsAAgAHAAMAAAAbAAsAAgABAAMAAAAcAAsAAgACAAMAAAAdAAsAAgACAAMAAAAeAAsAAgACAAMAAAAfAAsAAgACAAMAAAAgAAsAAgACAAMAAAAhAAsAAgACAAMAAAAiAAsAAgACAAMAAAAjAAsAAgACAAMAAAAkAAsAAgAHAAMAAAAnAAsAAgABAAMAAAAoAAsAAgACAAMAAAApAAsAAgACAAMAAAAqAAsAAgACAAMAAAArAAsAAgACAAMAAAAsAAsAAgACAAMAAAAtAAsAAgACAAMAAAAuAAsAAgACAAMAAAAvAAsAAgACAAMAAAAwAAsAAgACAAMAAAAxAAsAAgACAAMAAAAyAAsAAgACAAMAAAAzAAsAAgACAAMAAAA0AAsAAgACAAMAAAA1AAsAAgACAAMAAAA2AAsAAgACAAMAAAA3AAsAAgACAAMAAAA4AAsAAgACAAMAAAA5AAsAAgACAAMAAAA6AAsAAgACAAMAAAAgAAUAAgAJAAMAAAAhAAUAAgAKAAMAAAAiAAUAAgAMAAMAAAAjAAUAAgANAAMAAAAbAAIAAgAJAAMAAAAcAAIAAgAKAAMAAAAdAAIAAgAMAAMAAAAeAAIAAgANAAMAAAAgAP//AgAJAAMAAAAhAP//AgAKAAMAAAAiAP//AgAMAAMAAAAjAP//AgANAAMAAAAbAPz/AgAJAAMAAAAcAPz/AgAKAAMAAAAdAPz/AgAMAAMAAAAeAPz/AgANAAMAAAAgAPn/AgAJAAMAAAAhAPn/AgAKAAMAAAAiAPn/AgAMAAMAAAAjAPn/AgANAAMAAAAbAPb/AgAJAAMAAAAcAPb/AgAKAAMAAAAdAPb/AgAMAAMAAAAeAPb/AgANAAMAAAAgAPP/AgAJAAMAAAAhAPP/AgAKAAMAAAAiAPP/AgAMAAMAAAAjAPP/AgANAAMAAAAbAPD/AgAJAAMAAAAcAPD/AgAKAAMAAAAdAPD/AgAMAAMAAAAeAPD/AgANAAMAAAAgAO3/AgAJAAMAAAAhAO3/AgAKAAMAAAAiAO3/AgAMAAMAAAAjAO3/AgANAAMAAAAbAAgAAgAJAAMAAAAcAAgAAgAKAAMAAAAdAAgAAgAMAAMAAAAeAAgAAgANAAMAAAA=")
 tile_set = ExtResource("2_ry6l7")
 
-[node name="TileMapLayer-decoration" type="TileMapLayer" parent="tilemaps"]
+[node name="TileMapLayer-decoration" type="TileMapLayer" parent="tilemaps" unique_id=1267888792]
 tile_map_data = PackedByteArray("AAAAAAwAAwAMAAYAAAABAAwAAwAMAAYAAAACAAwAAwAMAAYAAAADAAwAAwAMAAYAAAAEAAwAAwAMAAYAAAAFAAwAAwAMAAYAAAAGAAoAAQACAAAAAAAGAAsAAwAMAAUAAAAGAAwAAwAMAAYAAAAHAAsAAwAMAAUAAAAHAAwAAwAMAAYAAAAIAAwAAwAMAAYAAAAJAAwAAwAMAAYAAAAKAAwAAwAMAAYAAAALAAwAAwAMAAYAAAAMAAwAAwAMAAYAAAANAAwAAwAMAAYAAAAOAAwAAwAMAAYAAAAPAAwAAwAMAAYAAAAQAAwAAwAMAAYAAAARAAwAAwAMAAYAAAASAAwAAwAMAAYAAAATAAsAAwAMAAUAAAATAAwAAwAMAAYAAAAUAAwAAwAMAAYAAAAVAAwAAwAMAAYAAAAWAAwAAwAMAAYAAAAXAAsAAwAMAAUAAAAXAAwAAwAMAAYAAAAYAAwAAwAMAAYAAAAZAAwAAwAMAAYAAAAaAAwAAwAMAAYAAAAbAAwAAwAMAAYAAAAcAAsAAwAMAAUAAAAcAAwAAwAMAAYAAAAdAAwAAwAMAAYAAAAeAAwAAwAMAAYAAAAfAAwAAwAMAAYAAAAgAAwAAwAMAAYAAAAhAAwAAwAMAAYAAAAiAAwAAwAMAAYAAAAjAAwAAwAMAAYAAAAkAAwAAwAMAAYAAAAlAAwAAwAMAAYAAAAmAAwAAwAMAAYAAAAnAAwAAwAMAAYAAAAoAAwAAwAMAAYAAAApAAwAAwAMAAYAAAAqAAwAAwAMAAYAAAArAAwAAwAMAAYAAAAsAAwAAwAMAAYAAAAtAAwAAwAMAAYAAAAuAAwAAwAMAAYAAAAvAAwAAwAMAAYAAAAwAAwAAwAMAAYAAAAxAAwAAwAMAAYAAAAyAAwAAwAMAAYAAAAzAAsAAwAMAAUAAAAzAAwAAwAMAAYAAAA0AAsAAwAMAAUAAAA0AAwAAwAMAAYAAAA1AAsAAwAMAAUAAAA1AAwAAwAMAAYAAAA2AAwAAwAMAAYAAAA3AAwAAwAMAAYAAAA4AAwAAwAMAAYAAAA5AAwAAwAMAAYAAAA6AAwAAwAMAAYAAAAAAAsAAwAMAAUAAAABAAsAAwAMAAUAAAACAAsAAwAMAAUAAAADAAsAAwAMAAUAAAAEAAsAAwAMAAUAAAAFAAsAAwAMAAUAAAAGAAkAAwABAAEAAAAHAAoAAQACAAAAAAAIAAsAAwAMAAUAAAAJAAsAAwAMAAUAAAAKAAsAAwAMAAUAAAALAAkAAQABAAAAAAALAAsAAwAMAAUAAAAMAAsAAwAMAAUAAAANAAsAAwAMAAUAAAAOAAsAAwAMAAUAAAAPAAsAAwAMAAUAAAAQAAsAAwAMAAUAAAARAAsAAwAMAAUAAAASAAsAAwAMAAUAAAATAAcAAgAAAAAAAAATAAoAAQADAAAAAAAUAAsAAwAMAAUAAAAVAAsAAwAMAAUAAAAWAAsAAwAMAAUAAAAYAAsAAwAMAAUAAAAZAAsAAwAMAAUAAAAaAAsAAwAMAAUAAAAbAAsAAwAMAAUAAAAcAAoAAwAJAAMAAAAdAAsAAwAMAAUAAAAeAAsAAwAMAAUAAAAfAAsAAwAMAAUAAAAgAAsAAwAMAAUAAAAhAAsAAwAMAAUAAAAiAAkAAwABAAEAAAAiAAsAAwAMAAUAAAAjAAsAAwAMAAUAAAAkAAsAAwAMAAUAAAAlAAsAAwAMAAUAAAAmAAsAAwAMAAUAAAAnAAsAAwAMAAUAAAAoAAsAAwAMAAUAAAApAAsAAwAMAAUAAAAqAAkAAwABAAEAAAAqAAsAAwAMAAUAAAArAAsAAwAMAAUAAAAsAAsAAwAMAAUAAAAtAAsAAwAMAAUAAAAuAAsAAwAMAAUAAAAvAAsAAwAMAAUAAAAwAAsAAwAMAAUAAAAxAAsAAwAMAAUAAAAyAAsAAwAMAAUAAAAzAAoAAwAFAAMAAAA0AAoAAwAGAAMAAAA1AAoAAwAHAAMAAAA2AAsAAwAMAAUAAAA3AAsAAwAMAAUAAAA4AAsAAwAMAAUAAAA5AAsAAwAMAAUAAAA6AAsAAwAMAAUAAAAyAAoAAAADAAUAAAA=")
 tile_set = ExtResource("3_ry6l7")
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+[node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=770786888]
 
-[node name="ParallaxLayer-5-sky" type="ParallaxLayer" parent="ParallaxBackground"]
+[node name="ParallaxLayer-5-sky" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1868520757]
 motion_scale = Vector2(0, 0)
 motion_mirroring = Vector2(288, 0)
 
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer-5-sky"]
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer-5-sky" unique_id=1027259956]
 texture_repeat = 2
 texture = ExtResource("4_4big0")
 centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 576, 208)
 
-[node name="ParallaxLayer-4-clouds" type="ParallaxLayer" parent="ParallaxBackground"]
+[node name="ParallaxLayer-4-clouds" type="ParallaxLayer" parent="ParallaxBackground" unique_id=264398327]
 motion_scale = Vector2(0.1, 0.05)
 motion_mirroring = Vector2(288, 0)
 
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer-4-clouds"]
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer-4-clouds" unique_id=1409347536]
 texture_repeat = 2
 texture = ExtResource("5_mf6tq")
 centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 576, 208)
 
-[node name="ParallaxLayer-3-clouds" type="ParallaxLayer" parent="ParallaxBackground"]
+[node name="ParallaxLayer-3-clouds" type="ParallaxLayer" parent="ParallaxBackground" unique_id=526392186]
 motion_scale = Vector2(0.2, 0.1)
 motion_mirroring = Vector2(288, 0)
 
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer-3-clouds"]
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer-3-clouds" unique_id=440111874]
 texture_repeat = 2
 texture = ExtResource("6_7xb8y")
 centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 576, 208)
 
-[node name="ParallaxLayer-2-water" type="ParallaxLayer" parent="ParallaxBackground"]
+[node name="ParallaxLayer-2-water" type="ParallaxLayer" parent="ParallaxBackground" unique_id=60198953]
 motion_scale = Vector2(0.3, 0.15)
 motion_mirroring = Vector2(288, 0)
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ParallaxBackground/ParallaxLayer-2-water"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ParallaxBackground/ParallaxLayer-2-water" unique_id=298643086]
 texture_repeat = 2
 sprite_frames = SubResource("SpriteFrames_7xb8y")
 autoplay = "default"
@@ -85,7 +86,7 @@ frame = 1
 frame_progress = 0.17107913
 centered = false
 
-[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="ParallaxBackground/ParallaxLayer-2-water"]
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="ParallaxBackground/ParallaxLayer-2-water" unique_id=576080002]
 texture_repeat = 2
 position = Vector2(576, 0)
 sprite_frames = SubResource("SpriteFrames_7xb8y")
@@ -94,14 +95,17 @@ frame = 1
 frame_progress = 0.17107913
 centered = false
 
-[node name="Camera2D" parent="." instance=ExtResource("9_34ia6")]
+[node name="Camera2D" parent="." unique_id=726660793 instance=ExtResource("9_34ia6")]
 position = Vector2(31, 112)
 limit_right = 825
 
-[node name="player" parent="." instance=ExtResource("1_bmxgx")]
+[node name="player" parent="." unique_id=1540071159 instance=ExtResource("1_bmxgx")]
 position = Vector2(7, 168)
 
-[node name="Area2D-endLevel" parent="." instance=ExtResource("10_d18o5")]
+[node name="Area2D-endLevel" parent="." unique_id=1878970419 instance=ExtResource("10_d18o5")]
 position = Vector2(835, 87.00001)
 scale = Vector2(1, 9.480007)
 next_level = "forest"
+
+[node name="skeleton" parent="." unique_id=354538646 instance=ExtResource("11_t8vtq")]
+position = Vector2(73, 154)

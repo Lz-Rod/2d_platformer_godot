@@ -6,7 +6,8 @@ enum PlayerState {
 	jump,
 	fall,
 	crouch,
-	slide
+	slide,
+	hurt
 }
 
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
@@ -47,6 +48,8 @@ func _physics_process(delta: float) -> void:
 			crouch_state(delta)
 		PlayerState.slide:
 			slide_state(delta)
+		PlayerState.hurt:
+			hurt_state(delta)
 			
 	move_and_slide()
 
@@ -86,6 +89,11 @@ func go_to_slide_state():
 	
 func exit_from_slide_state():
 	set_collide_size(10,14,1)
+	
+func go_to_hurt_state():
+	status = PlayerState.hurt
+	anim.play("hurt")
+	velocity = Vector2.ZERO
 
 #essas funções determinam o que acontece em cada estado
 func idle_state(delta):
@@ -166,6 +174,10 @@ func slide_state(delta):
 		exit_from_slide_state()
 		go_to_crouch_state()
 		return
+
+func hurt_state(_delta):
+	pass		
+
 #atualiza a velocidade do player e faz a animação flipar
 func move(delta):
 	update_direction()
@@ -191,3 +203,13 @@ func can_jump() -> bool:
 func set_collide_size(x, y, pos):
 	coll.shape.size = Vector2(x,y)
 	coll.position.y = pos
+
+
+func _on_area_2_dhitbox_area_entered(area: Area2D) -> void:
+	if velocity.y > 0:
+		#inimigo morre
+		area.get_parent().take_damage()
+		go_to_jump_state()
+	else:
+		#player morre
+		go_to_hurt_state()

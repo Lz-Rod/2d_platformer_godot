@@ -8,11 +8,15 @@
 
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="plataforma-2d"
-run/main_scene="uid://c5kecnhikvn40"
-config/features=PackedStringArray("4.5", "Mobile")
+run/main_scene="uid://xrvln1vkk54l"
+config/features=PackedStringArray("4.6", "Mobile")
 config/icon="res://icon.svg"
 
 [display]
