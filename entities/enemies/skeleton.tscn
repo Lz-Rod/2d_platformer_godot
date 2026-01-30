@@ -2,7 +2,28 @@
 
 [ext_resource type="Script" uid="uid://bgayol57h3p1d" path="res://scripts/enemies/skeleton.gd" id="1_as1re"]
 [ext_resource type="Texture2D" uid="uid://lvw4i457pf3m" path="res://sprites/enemies/skeleton/Crumbling_Into_Bone_Pile (32 x 32).png" id="2_68p4h"]
+[ext_resource type="Texture2D" uid="uid://beonvqrad8vcn" path="res://sprites/enemies/skeleton/Bone_Toss (32 x 32).png" id="2_ehfc0"]
 [ext_resource type="Texture2D" uid="uid://dmibjpedolj6b" path="res://sprites/enemies/skeleton/Limping_Movement (32 x 32).png" id="3_ehfc0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tm6xt"]
+atlas = ExtResource("2_ehfc0")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v8mx3"]
+atlas = ExtResource("2_ehfc0")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xuu30"]
+atlas = ExtResource("2_ehfc0")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r8bqt"]
+atlas = ExtResource("2_ehfc0")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sd1go"]
+atlas = ExtResource("2_ehfc0")
+region = Rect2(128, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hglc0"]
 atlas = ExtResource("2_68p4h")
@@ -58,6 +79,26 @@ region = Rect2(160, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_as1re"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tm6xt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v8mx3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xuu30")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r8bqt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sd1go")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 7.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hglc0")
@@ -120,13 +161,17 @@ script = ExtResource("1_as1re")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=646237070]
 sprite_frames = SubResource("SpriteFrames_as1re")
-animation = &"hurt"
+animation = &"attack"
+frame = 4
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=180014763]
+visible = false
 position = Vector2(1.5, 3)
 shape = SubResource("RectangleShape2D_68p4h")
 
 [node name="Area2D-hitbox" type="Area2D" parent="." unique_id=1260194987]
+visible = false
 collision_layer = 4
 collision_mask = 2
 
@@ -142,3 +187,13 @@ target_position = Vector2(12, 0)
 [node name="RayCast2D - groundDetector" type="RayCast2D" parent="." unique_id=1945264685]
 position = Vector2(12, 0)
 target_position = Vector2(0, 18)
+
+[node name="RayCast2D - playerDetector" type="RayCast2D" parent="." unique_id=543043610]
+position = Vector2(0, 10)
+target_position = Vector2(51, 0)
+collision_mask = 2
+
+[node name="Node2D - bonePosition" type="Node2D" parent="." unique_id=417917127]
+position = Vector2(14, 0)
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
