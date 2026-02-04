@@ -12,6 +12,7 @@ enum PlayerState {
 
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var coll: CollisionShape2D = $CollisionShape2D
+@onready var coll_hitbox: CollisionShape2D = $"Area2D-hitbox/CollisionShape2D"
 @onready var reload: Timer = $"Timer-reload"
 
 @export var max_speed = 180.0
@@ -92,9 +93,12 @@ func exit_from_slide_state():
 	set_collide_size(10,14,1)
 	
 func go_to_hurt_state():
+	if status == PlayerState.hurt:
+		return
+		
 	status = PlayerState.hurt
 	anim.play("hurt")
-	velocity = Vector2.ZERO
+	velocity.x = 0
 	reload.start()
 
 #essas funções determinam o que acontece em cada estado
@@ -204,19 +208,32 @@ func can_jump() -> bool:
 
 func set_collide_size(x, y, pos):
 	coll.shape.size = Vector2(x,y)
+	coll_hitbox.shape.size = Vector2(x,y)
 	coll.position.y = pos
+	coll_hitbox.position.y = pos
 
 
 func _on_area_2_dhitbox_area_entered(area: Area2D) -> void:
+	if area.is_in_group("enemies"):
+		hit_enemy(area)
+	elif area.is_in_group("hurtArea"):
+		hit_hurt_area()
+		
+func _on_area_2_dhitbox_body_entered(body: Node2D) -> void:
+	if body.is_in_group("hurtArea"):
+		go_to_hurt_state()
+		
+func hit_enemy(area: Area2D):
 	if velocity.y > 0:
 		#inimigo morre
 		area.get_parent().take_damage()
 		go_to_jump_state()
 	else:
 		#player morre
-		if status != PlayerState.hurt:
-			go_to_hurt_state()
-
+		go_to_hurt_state()
+	
+func hit_hurt_area():
+	go_to_hurt_state()	
 
 func _on_timerreload_timeout() -> void:
 	get_tree().reload_current_scene()
