@@ -160,6 +160,7 @@ collision_layer = 4
 script = ExtResource("1_as1re")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=646237070]
+position = Vector2(0, 1.1)
 sprite_frames = SubResource("SpriteFrames_as1re")
 animation = &"attack"
 frame = 4
