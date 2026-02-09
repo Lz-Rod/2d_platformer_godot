@@ -7,6 +7,7 @@ enum PlayerState {
 	fall,
 	crouch,
 	slide,
+	wall,
 	hurt
 }
 
@@ -14,11 +15,16 @@ enum PlayerState {
 @onready var coll: CollisionShape2D = $CollisionShape2D
 @onready var coll_hitbox: CollisionShape2D = $"Area2D-hitbox/CollisionShape2D"
 @onready var reload: Timer = $"Timer-reload"
+@onready var left_wall_detector: RayCast2D = $"RayCast2D-LeftWallDetector"
+@onready var right_wall_detector: RayCast2D = $"RayCast2D-RightWallDetector"
 
 @export var max_speed = 180.0
 @export var acceleration = 400
 @export var deceleration = 400
 @export var slide_deceleration = 100
+@export var wall_acceleration = 40
+@export var wall_jump_velocity = 200
+
 const JUMP_VELOCITY = -300.0
 
 var jump_count = 0
@@ -32,10 +38,7 @@ func _ready() -> void:
 	go_to_idle_state()
 
 func _physics_process(delta: float) -> void:
-	
-	#adiciona a gravidade
-	if not is_on_floor():
-		velocity += get_gravity() * delta
+
 	
 	match status:
 		PlayerState.idle:
@@ -50,6 +53,8 @@ func _physics_process(delta: float) -> void:
 			crouch_state(delta)
 		PlayerState.slide:
 			slide_state(delta)
+		PlayerState.wall:
+			wall_state(delta)
 		PlayerState.hurt:
 			hurt_state(delta)
 			
@@ -92,6 +97,12 @@ func go_to_slide_state():
 func exit_from_slide_state():
 	set_collide_size(10,14,1)
 	
+func go_to_wall_state():
+	status = PlayerState.wall
+	anim.play("wall")
+	velocity = Vector2.ZERO
+	jump_count = 0
+
 func go_to_hurt_state():
 	if status == PlayerState.hurt:
 		return
@@ -103,6 +114,7 @@ func go_to_hurt_state():
 
 #essas funções determinam o que acontece em cada estado
 func idle_state(delta):
+	apply_gravity(delta)
 	move(delta)
 	if velocity.x != 0:
 		go_to_walk_state()
@@ -117,6 +129,7 @@ func idle_state(delta):
 		return
 	
 func walk_state(delta):
+	apply_gravity(delta)
 	move(delta)
 	if velocity.x == 0:
 		go_to_idle_state()
@@ -136,6 +149,7 @@ func walk_state(delta):
 		return
 	
 func jump_state(delta):
+	apply_gravity(delta)
 	move(delta)
 	
 	if Input.is_action_just_pressed("jump") && can_jump():
@@ -147,6 +161,7 @@ func jump_state(delta):
 		return
 				
 func fall_state(delta):
+	apply_gravity(delta)
 	move(delta)
 	
 	if Input.is_action_just_pressed("jump") && can_jump():
@@ -160,8 +175,13 @@ func fall_state(delta):
 		else:
 			go_to_walk_state()
 		return
+		
+	if left_wall_detector.is_colliding() or right_wall_detector.is_colliding():
+		go_to_wall_state()
+		return
 
-func crouch_state(_delta):
+func crouch_state(delta):
+	apply_gravity(delta)
 	update_direction()
 	if Input.is_action_just_released("crouch"):
 		exit_from_crouch_state()
@@ -169,6 +189,7 @@ func crouch_state(_delta):
 	return
 	
 func slide_state(delta):
+	apply_gravity(delta)
 	velocity.x = move_toward(velocity.x, 0, slide_deceleration * delta)
 	
 	if Input.is_action_just_released("crouch"):
@@ -181,8 +202,30 @@ func slide_state(delta):
 		go_to_crouch_state()
 		return
 
-func hurt_state(_delta):
-	pass		
+func wall_state(delta):	
+	
+	velocity.y += wall_acceleration * delta
+	
+	if left_wall_detector.is_colliding():
+		anim.flip_h = false
+		direction = 1
+	elif right_wall_detector.is_colliding():
+		anim.flip_h = true
+		direction = -1
+	else:
+		go_to_fall_state()
+		return
+	
+	if is_on_floor():
+		go_to_idle_state()
+		return
+	
+	if Input.is_action_just_pressed("jump"):
+		velocity.x = wall_jump_velocity * direction
+		go_to_jump_state()
+		return
+func hurt_state(delta):
+	apply_gravity(delta)		
 
 #atualiza a velocidade do player e faz a animação flipar
 func move(delta):
@@ -193,7 +236,12 @@ func move(delta):
 		
 	else:
 		velocity.x = move_toward(velocity.x, 0, deceleration * delta)
-		
+
+func apply_gravity(delta):
+		#adiciona a gravidade
+	if not is_on_floor():
+		velocity += get_gravity() * delta
+	
 func update_direction():
 	direction = Input.get_axis("left", "right")
 	
