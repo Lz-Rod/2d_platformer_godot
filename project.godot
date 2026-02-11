@@ -31,6 +31,7 @@ window/stretch/mode="canvas_items"
 g-player=""
 enemies=""
 hurtArea=""
+water=""
 
 [input]
 
@@ -67,6 +68,7 @@ crouch={
 2d_physics/layer_3="enemies"
 2d_physics/layer_4="end_level"
 2d_physics/layer_5="hurt_area"
+2d_physics/layer_6="water"
 
 [rendering]
 

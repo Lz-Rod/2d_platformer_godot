@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://by1ib4rtws820" path="res://sprites/player/Jump (16 x 16).png" id="3_rfe5m"]
 [ext_resource type="Texture2D" uid="uid://dypldumt76ed4" path="res://sprites/player/Lying_On_Ground (16 x 16).png" id="4_tjdhl"]
 [ext_resource type="Texture2D" uid="uid://b2kvfhv26ohef" path="res://sprites/player/Belly_Sliding (16 x 16).png" id="6_6nm46"]
+[ext_resource type="Texture2D" uid="uid://s0cjhi567ykt" path="res://sprites/player/Swimming (16 x 16).png" id="9_x08pd"]
 [ext_resource type="Texture2D" uid="uid://dpcmxo55j02t6" path="res://sprites/player/Wall_Slide (16x16).png" id="10_tjdhl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e4p34"]
@@ -46,6 +47,18 @@ region = Rect2(16, 0, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_8rie4"]
 atlas = ExtResource("6_6nm46")
 region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cicqb"]
+atlas = ExtResource("9_x08pd")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hj0ki"]
+atlas = ExtResource("9_x08pd")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fruft"]
+atlas = ExtResource("9_x08pd")
+region = Rect2(48, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i623q"]
 atlas = ExtResource("3_e4p34")
@@ -160,6 +173,23 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_cicqb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hj0ki")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fruft")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hj0ki")
+}],
+"loop": true,
+"name": &"swimming",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_i623q")
 }, {
 "duration": 1.0,
@@ -214,9 +244,9 @@ script = ExtResource("1_merdl")
 z_index = 1
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_i623q")
-animation = &"wall"
+animation = &"swimming"
 frame = 1
-frame_progress = 0.33028227
+frame_progress = 0.9690734
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=633640800]
 visible = false
@@ -225,7 +255,7 @@ shape = SubResource("RectangleShape2D_u3f3p")
 
 [node name="Area2D-hitbox" type="Area2D" parent="." unique_id=1593469577]
 collision_layer = 2
-collision_mask = 20
+collision_mask = 52
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D-hitbox" unique_id=425493509]
 visible = false
@@ -238,13 +268,16 @@ wait_time = 0.5
 one_shot = true
 
 [node name="RayCast2D-LeftWallDetector" type="RayCast2D" parent="." unique_id=1574513825]
+visible = false
 z_index = 10
 target_position = Vector2(-7, 0)
 
 [node name="RayCast2D-RightWallDetector" type="RayCast2D" parent="." unique_id=732111624]
+visible = false
 z_index = 10
 target_position = Vector2(7, 0)
 
 [connection signal="area_entered" from="Area2D-hitbox" to="." method="_on_area_2_dhitbox_area_entered"]
 [connection signal="body_entered" from="Area2D-hitbox" to="." method="_on_area_2_dhitbox_body_entered"]
+[connection signal="body_exited" from="Area2D-hitbox" to="." method="_on_area_2_dhitbox_body_exited"]
 [connection signal="timeout" from="Timer-reload" to="." method="_on_timerreload_timeout"]
