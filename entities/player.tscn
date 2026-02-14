@@ -238,6 +238,7 @@ size = Vector2(10, 15)
 [node name="player" type="CharacterBody2D" unique_id=2033644194 groups=["g-player"]]
 collision_layer = 2
 collision_mask = 9
+platform_on_leave = 1
 script = ExtResource("1_merdl")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=215828791]

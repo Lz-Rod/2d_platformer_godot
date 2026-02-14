@@ -1,0 +1,79 @@
+[gd_scene format=3 uid="uid://vrisikjjbb7s"]
+
+[ext_resource type="Texture2D" uid="uid://8gin24dxu2gj" path="res://sprites/tilesets/5 - Misc. universal tiles/Blocks (16 x 16).png" id="1_bypwj"]
+[ext_resource type="Script" uid="uid://bm4oicohj8mve" path="res://scripts/broken_block.gd" id="1_e12t1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e12t1"]
+size = Vector2(16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_31fco"]
+atlas = ExtResource("1_bypwj")
+region = Rect2(64, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7hcch"]
+atlas = ExtResource("1_bypwj")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5v0av"]
+atlas = ExtResource("1_bypwj")
+region = Rect2(80, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_a4bv7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_31fco")
+}],
+"loop": true,
+"name": &"broken",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7hcch")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5v0av")
+}],
+"loop": true,
+"name": &"falling",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bypwj"]
+size = Vector2(16, 2)
+
+[node name="StaticBody2D_BrokenBlock" type="StaticBody2D" unique_id=388595996]
+collision_mask = 2
+script = ExtResource("1_e12t1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=597961726]
+shape = SubResource("RectangleShape2D_e12t1")
+one_way_collision = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1233896977]
+sprite_frames = SubResource("SpriteFrames_a4bv7")
+autoplay = "default"
+
+[node name="Area2D" type="Area2D" parent="." unique_id=660790761]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=2060291565]
+position = Vector2(0, -9)
+shape = SubResource("RectangleShape2D_bypwj")
+debug_color = Color(0.8444264, 0.32599393, 0.51026094, 0.41960785)
+
+[node name="Timer-Broken" type="Timer" parent="." unique_id=1861841341]
+one_shot = true
+
+[node name="Timer-Reset" type="Timer" parent="." unique_id=739761775]
+wait_time = 5.0
+one_shot = true
+
+[connection signal="timeout" from="Timer-Broken" to="." method="_on_timer_broken_timeout"]
+[connection signal="timeout" from="Timer-Reset" to="." method="_on_timer_reset_timeout"]

@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://lfbu78372jij" path="res://sprites/tilesets/5 - Misc. universal tiles/Distant _water.png" id="9_ytc0w"]
 [ext_resource type="PackedScene" uid="uid://dlo804hok3vy6" path="res://entities/end_level.tscn" id="10_d18o5"]
 [ext_resource type="PackedScene" uid="uid://dbmu3ctwrftes" path="res://entities/enemies/skeleton.tscn" id="11_t8vtq"]
+[ext_resource type="PackedScene" uid="uid://drv2i84s8g1ox" path="res://entities/moving_platfform.tscn" id="14_xflqb"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_7xb8y"]
 animations = [{
@@ -129,3 +130,19 @@ next_level = "forest"
 
 [node name="skeleton" parent="." unique_id=354538646 instance=ExtResource("11_t8vtq")]
 position = Vector2(245, 159)
+
+[node name="AnimatableBody2D-movingPlatfform" parent="." unique_id=375511277 instance=ExtResource("14_xflqb")]
+position = Vector2(155, 132)
+
+[node name="Target" parent="AnimatableBody2D-movingPlatfform" index="1" unique_id=793989745]
+position = Vector2(0, -109)
+
+[node name="AnimatableBody2D-movingPlatfform2" parent="." unique_id=1417387323 instance=ExtResource("14_xflqb")]
+position = Vector2(213, 23)
+time = 2
+
+[node name="Target" parent="AnimatableBody2D-movingPlatfform2" index="1" unique_id=793989745]
+position = Vector2(160, 0)
+
+[editable path="AnimatableBody2D-movingPlatfform"]
+[editable path="AnimatableBody2D-movingPlatfform2"]
